@@ -236,3 +236,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   .section { padding: 64px 0; }
   .about__art { max-width: 320px; }
 }
+
+/* Ürün fotoğrafları */
+.card__img img, .modal__img img, .line-item__img img { width: 100%; height: 100%; object-fit: cover; }
+.line-item__img { overflow: hidden; }

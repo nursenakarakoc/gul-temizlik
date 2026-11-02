@@ -1,59 +1,7 @@
 // WhatsApp siparişlerinin gideceği numara (ülke koduyla, boşluksuz). Kendi numaranızı yazın.
 const WHATSAPP_NUMBER = "905444685776";
 
-// Ürün listesi — yeni ürün eklemek için bu diziye satır eklemeniz yeterli.
-// Bunlar örnek ürünlerdir; kendi ürünleriniz olunca değiştirin.
-// shape: çizim türü (sise, sprey, kutu, rulo, sunger)
-const PRODUCTS = [
-  { id: 1, name: "Yüzey Temizleyici Lavanta", cat: "yuzey", shape: "sise", price: 89, oldPrice: 109, bg: "#efeaf6", tone: "#8a6cc4", badge: "Çok Satan",
-    amount: "2,5 L", usage: "Fayans, mutfak tezgâhı, yer ve tüm silinebilir yüzeyler",
-    desc: "Kalıcı lavanta kokulu, sulandırarak da kullanılabilen ekonomik yüzey temizleyici." },
-  { id: 2, name: "Çamaşır Suyu Ultra", cat: "yuzey", shape: "sise", price: 69, bg: "#e8f2fa", tone: "#3a86c8",
-    amount: "4 L", usage: "Banyo, tuvalet, zemin; beyaz çamaşırlar",
-    desc: "Yoğun kıvamlı, mikroplara karşı etkili çamaşır suyu. Kötü kokuları giderir." },
-  { id: 3, name: "Cam Temizleyici Sprey", cat: "yuzey", shape: "sprey", price: 59, bg: "#e6f5f3", tone: "#2ea893",
-    amount: "750 ml", usage: "Cam, ayna, vitrin ve parlak yüzeyler",
-    desc: "İz bırakmadan parlatan, hızlı kuruyan cam temizleyici." },
-  { id: 4, name: "Yağ Çözücü Sprey", cat: "yuzey", shape: "sprey", price: 79, bg: "#fdf0e3", tone: "#e08a2e", badge: "Yeni",
-    amount: "750 ml", usage: "Ocak, davlumbaz, fırın, mutfak dolapları",
-    desc: "Mutfaktaki inatçı yağ ve kirleri ovalamadan çözer." },
-  { id: 5, name: "Toz Çamaşır Deterjanı", cat: "camasir", shape: "kutu", price: 349, oldPrice: 399, bg: "#e8f2fa", tone: "#3a86c8", badge: "Çok Satan",
-    amount: "9 kg (60 yıkama)", usage: "Beyaz ve renkli çamaşırlar, otomatik makine",
-    desc: "Düşük sıcaklıkta bile lekeleri çıkaran ekonomik boy toz deterjan." },
-  { id: 6, name: "Sıvı Çamaşır Deterjanı", cat: "camasir", shape: "sise", price: 229, bg: "#eef0f6", tone: "#5a6ab0",
-    amount: "3 L (50 yıkama)", usage: "Renkli ve siyah çamaşırlar",
-    desc: "Renkleri koruyan, kalıntı bırakmayan sıvı deterjan." },
-  { id: 7, name: "Çamaşır Yumuşatıcı", cat: "camasir", shape: "sise", price: 129, bg: "#fbe9ef", tone: "#e0567a",
-    amount: "4 L", usage: "Tüm çamaşırlar",
-    desc: "Çamaşırlarınıza yumuşaklık ve gün boyu süren gül ferahlığı." },
-  { id: 8, name: "Bulaşık Deterjanı Limon", cat: "bulasik", shape: "sise", price: 75, bg: "#fbf6dc", tone: "#d6b21e",
-    amount: "1,5 L", usage: "Elde bulaşık yıkama",
-    desc: "Yağları hızla çözen, elleri yormayan limon kokulu bulaşık deterjanı." },
-  { id: 9, name: "Bulaşık Makinesi Tableti", cat: "bulasik", shape: "kutu", price: 289, oldPrice: 339, bg: "#e6f5f3", tone: "#2ea893",
-    amount: "60 tablet", usage: "Bulaşık makinesi",
-    desc: "Hepsi bir arada tablet: deterjan, parlatıcı ve tuz bir arada." },
-  { id: 10, name: "Bulaşık Süngeri (10'lu)", cat: "bulasik", shape: "sunger", price: 49, bg: "#f1f6e4", tone: "#7aa83a",
-    amount: "10 adet", usage: "Bulaşık ve mutfak temizliği",
-    desc: "Bir yüzü yumuşak, bir yüzü ovucu; tencere ve tavaya zarar vermez." },
-  { id: 11, name: "Kireç Çözücü", cat: "banyo", shape: "sprey", price: 85, bg: "#e8f2fa", tone: "#3a86c8",
-    amount: "750 ml", usage: "Duşakabin, batarya, lavabo, fayans",
-    desc: "Kireç ve sabun lekelerini kolayca çözer, armatürlere parlaklık verir." },
-  { id: 12, name: "WC Jel Temizleyici", cat: "banyo", shape: "sise", price: 65, bg: "#e6f5f3", tone: "#2ea893", badge: "Yeni",
-    amount: "750 ml", usage: "Klozet ve pisuvar",
-    desc: "Kenar altlarına kadar ulaşan yoğun jel; kir ve kokuyu giderir." },
-  { id: 13, name: "Sıvı El Sabunu", cat: "banyo", shape: "sise", price: 119, bg: "#fbe9ef", tone: "#e0567a",
-    amount: "3,5 L", usage: "Ev, ofis ve iş yeri lavaboları",
-    desc: "Gül kokulu, cildi kurutmayan ekonomik boy sıvı sabun. Dispenser doldurmak için ideal." },
-  { id: 14, name: "Tuvalet Kağıdı (32'li)", cat: "kagit", shape: "rulo", price: 259, oldPrice: 299, bg: "#f4f4f4", tone: "#9aa0a6", badge: "Çok Satan",
-    amount: "32 rulo, 3 katlı", usage: "Ev ve iş yeri",
-    desc: "Yumuşak ve dayanıklı 3 katlı tuvalet kağıdı, ekonomik paket." },
-  { id: 15, name: "Kağıt Havlu (12'li)", cat: "kagit", shape: "rulo", price: 199, bg: "#eef4f8", tone: "#6a98b8",
-    amount: "12 rulo, 2 katlı", usage: "Mutfak ve genel temizlik",
-    desc: "Yüksek emiciliğe sahip, kolay yırtılmayan kağıt havlu." },
-  { id: 16, name: "Çöp Torbası Jumbo (10'lu)", cat: "kagit", shape: "kutu", price: 55, bg: "#ececec", tone: "#4a4f55",
-    amount: "10 adet, 80x110 cm", usage: "Büyük çöp kovaları, iş yerleri",
-    desc: "Kalın ve dayanıklı, büzgülü jumbo boy çöp torbası." },
-];
+// Ürün listesi urunler.js dosyasındadır.
 
 const CATEGORY_LABELS = { yuzey: "Yüzey & Ev", camasir: "Çamaşır", bulasik: "Bulaşık", banyo: "Banyo", kagit: "Kağıt & Hijyen" };
 
@@ -71,6 +19,11 @@ function icon(shape, tone) {
     default:
       return `<svg viewBox="0 0 100 100"><rect x="42" y="10" width="16" height="10" rx="2" fill="#2b3a3a"/><path d="M40 20h20v8c8 3 12 8 12 15v41c0 4-3 6-6 6H34c-3 0-6-2-6-6V43c0-7 4-12 12-15Z" fill="${tone}"/><rect x="34" y="48" width="32" height="26" rx="5" fill="#fff" opacity=".9"/><path d="M50 54c-4 4-5 7-5 9a5 5 0 0 0 10 0c0-2-1-5-5-9Z" fill="${tone}"/></svg>`;
   }
+}
+
+// Ürünün fotoğrafı varsa onu, yoksa çizimini gösterir.
+function visual(p) {
+  return p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : icon(p.shape, p.tone || "#3cb5a0");
 }
 
 const formatPrice = (n) => n.toLocaleString("tr-TR") + " ₺";
@@ -112,7 +65,7 @@ function renderCart() {
   list.innerHTML = lines.length
     ? lines.map((l) => `
         <div class="line-item">
-          <div class="line-item__img" style="background:${l.bg}">${icon(l.shape, l.tone)}</div>
+          <div class="line-item__img" style="background:${l.bg || "#eef4f3"}">${visual(l)}</div>
           <div>
             <div class="line-item__name">${l.name}</div>
             <div class="qty">
@@ -148,9 +101,9 @@ function renderProducts() {
   }
   grid.innerHTML = items.map((p) => `
     <article class="card">
-      <div class="card__img" style="background:${p.bg}" data-view="${p.id}">
+      <div class="card__img" style="background:${p.bg || "#eef4f3"}" data-view="${p.id}">
         ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
-        ${icon(p.shape, p.tone)}
+        ${visual(p)}
       </div>
       <div class="card__body">
         <span class="card__cat">${CATEGORY_LABELS[p.cat]}</span>
@@ -188,8 +141,8 @@ function openModal(id) {
   if (!p) return;
   modalProductId = id;
   const img = document.getElementById("modalImg");
-  img.style.background = p.bg;
-  img.innerHTML = icon(p.shape, p.tone);
+  img.style.background = p.bg || "#eef4f3";
+  img.innerHTML = visual(p);
   document.getElementById("modalCat").textContent = CATEGORY_LABELS[p.cat];
   document.getElementById("modalName").textContent = p.name;
   document.getElementById("modalPrice").innerHTML = priceHtml(p);
