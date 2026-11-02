@@ -1,11 +1,21 @@
-// WhatsApp siparişlerinin gideceği numara (ülke koduyla, boşluksuz). Kendi numaranızı yazın.
+// ============================ AYARLAR ============================
+// WhatsApp siparişlerinin gideceği numara (ülke koduyla, boşluksuz).
 const WHATSAPP_NUMBER = "905444685776";
 
-// Ürün listesi urunler.js dosyasındadır.
+// Ürünlerin okunacağı Google E-Tablo'nun "Web'de yayınla → CSV" linki.
+// Boş bırakılırsa urunler.js içindeki örnek ürünler gösterilir.
+const URUN_TABLOSU_LINKI = "";
+// =================================================================
 
 const CATEGORY_LABELS = { yuzey: "Yüzey & Ev", camasir: "Çamaşır", bulasik: "Bulaşık", banyo: "Banyo", kagit: "Kağıt & Hijyen" };
 
-// Görsel yerine basit çizimler; gerçek fotoğraflarınız olunca <img> ile değiştirebilirsiniz.
+// Fotoğrafı olmayan ürünlerde kullanılan arka plan / çizim renkleri.
+const PALETTE = [
+  ["#e8f2fa", "#3a86c8"], ["#e6f5f3", "#2ea893"], ["#fbe9ef", "#e0567a"], ["#efeaf6", "#8a6cc4"],
+  ["#fdf0e3", "#e08a2e"], ["#fbf6dc", "#d6b21e"], ["#f1f6e4", "#7aa83a"], ["#eef0f6", "#5a6ab0"],
+];
+
+// Görsel yerine basit çizimler; ürünün fotoğrafı varsa onun yerine fotoğraf gösterilir.
 function icon(shape, tone) {
   switch (shape) {
     case "sprey":
@@ -21,12 +31,134 @@ function icon(shape, tone) {
   }
 }
 
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
 // Ürünün fotoğrafı varsa onu, yoksa çizimini gösterir.
 function visual(p) {
-  return p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : icon(p.shape, p.tone || "#3cb5a0");
+  return p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">` : icon(p.shape, p.tone);
 }
 
-const formatPrice = (n) => n.toLocaleString("tr-TR") + " ₺";
+const formatPrice = (n) => {
+  const digits = Number.isInteger(Math.round(n * 100) / 100) ? 0 : 2;
+  return n.toLocaleString("tr-TR", { minimumFractionDigits: digits, maximumFractionDigits: 2 }) + " ₺";
+};
+
+// --- Google E-Tablo'dan ürün okuma ---
+
+// "Ürün Adı" → "urunadi" gibi; başlık ve anahtar kelime karşılaştırmaları için.
+const simplify = (s) => String(s).toLocaleLowerCase("tr").replace(/ı/g, "i").normalize("NFD")
+  .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+
+const COLUMNS = {
+  urunadi: "name", urun: "name", ad: "name",
+  kategori: "cat",
+  fiyat: "price",
+  eskifiyat: "oldPrice", indirimsizfiyat: "oldPrice",
+  miktar: "amount",
+  kullanim: "usage", kullanimalani: "usage",
+  aciklama: "desc",
+  etiket: "badge",
+  fotograf: "image", fotograflinki: "image", resim: "image", resimlinki: "image",
+  sitedegoster: "show", goster: "show", aktif: "show",
+};
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [], field = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') quoted = false;
+      else field += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ",") { row.push(field); field = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(field); rows.push(row); row = []; field = "";
+    } else field += c;
+  }
+  if (field || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+// "1.299,90 ₺", "49.90", "75 TL" gibi yazımları sayıya çevirir.
+function parsePrice(v) {
+  let s = String(v || "").replace(/[^\d.,]/g, "");
+  if (!s) return 0;
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/\.\d{3}$/.test(s)) s = s.replace(/\./g, "");
+  return Number(s) || 0;
+}
+
+// Google Drive paylaşım linkini doğrudan görüntülenebilir resim linkine çevirir.
+function imageUrl(v) {
+  const s = String(v || "").trim();
+  if (!s) return "";
+  const drive = s.includes("drive.google.com") && (s.match(/\/d\/([\w-]+)/) || s.match(/[?&]id=([\w-]+)/));
+  return drive ? `https://lh3.googleusercontent.com/d/${drive[1]}` : s;
+}
+
+function guessShape(name, cat) {
+  const t = simplify(name + " " + cat);
+  if (/sprey|cam|kirec|yagcozucu/.test(t)) return "sprey";
+  if (/kagit|havlu|pecete|rulo/.test(t)) return "rulo";
+  if (/sunger|bez|tel/.test(t)) return "sunger";
+  if (/toz|tablet|kapsul|torba|poset|kutu|eldiven/.test(t)) return "kutu";
+  return "sise";
+}
+
+function colorsFor(name) {
+  let h = 0;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return PALETTE[h % PALETTE.length];
+}
+
+function rowsToProducts(rows) {
+  const keys = rows[0].map((h) => COLUMNS[simplify(h)]);
+  const seen = new Set();
+  return rows.slice(1).flatMap((cells) => {
+    const r = {};
+    keys.forEach((k, i) => { if (k) r[k] = (cells[i] || "").trim(); });
+    if (!r.name || !parsePrice(r.price)) return [];
+    if (r.show && /^(hayir|h|yok|0|false)$/.test(simplify(r.show))) return [];
+
+    let id = simplify(r.name) || "urun";
+    while (seen.has(id)) id += "-2";
+    seen.add(id);
+
+    const [bg, tone] = colorsFor(r.name);
+    const oldPrice = parsePrice(r.oldPrice);
+    const price = parsePrice(r.price);
+    return [{
+      id, name: r.name, cat: r.cat || "Diğer", price,
+      oldPrice: oldPrice > price ? oldPrice : 0,
+      amount: r.amount, usage: r.usage, desc: r.desc, badge: r.badge,
+      image: imageUrl(r.image), shape: guessShape(r.name, r.cat || ""), bg, tone,
+    }];
+  });
+}
+
+// urunler.js içindeki örnek ürünleri aynı biçime getirir.
+const fallbackProducts = () => PRODUCTS.map((p) => ({
+  ...p, id: "ornek-" + p.id, cat: CATEGORY_LABELS[p.cat] || p.cat, tone: p.tone || "#3cb5a0",
+}));
+
+async function loadProducts() {
+  if (!URUN_TABLOSU_LINKI) return fallbackProducts();
+  try {
+    const sep = URUN_TABLOSU_LINKI.includes("?") ? "&" : "?";
+    const res = await fetch(`${URUN_TABLOSU_LINKI}${sep}_=${Date.now()}`);
+    if (!res.ok) throw new Error(res.status);
+    return rowsToProducts(parseCsv(await res.text()));
+  } catch (err) {
+    console.warn("Ürün tablosu okunamadı, örnek ürünler gösteriliyor.", err);
+    return fallbackProducts();
+  }
+}
+
+let products = [];
+const findProduct = (id) => products.find((p) => p.id === id);
 
 // --- Sepet (tarayıcıda saklanır) ---
 let cart = [];
@@ -53,9 +185,12 @@ function changeQty(id, delta) {
   saveCart();
 }
 
+// Sepetteki ve hâlâ satışta olan ürünler (tablodan silinen ürün sepetten de düşer).
+const cartLines = () => cart.map((i) => ({ ...findProduct(i.id), qty: i.qty })).filter((l) => l.name);
+
 function renderCart() {
   const list = document.getElementById("cartItems");
-  const lines = cart.map((i) => ({ ...PRODUCTS.find((p) => p.id === i.id), qty: i.qty })).filter((l) => l.name);
+  const lines = cartLines();
   const total = lines.reduce((sum, l) => sum + l.price * l.qty, 0);
   const count = lines.reduce((sum, l) => sum + l.qty, 0);
 
@@ -65,18 +200,18 @@ function renderCart() {
   list.innerHTML = lines.length
     ? lines.map((l) => `
         <div class="line-item">
-          <div class="line-item__img" style="background:${l.bg || "#eef4f3"}">${visual(l)}</div>
+          <div class="line-item__img" style="background:${l.bg}">${visual(l)}</div>
           <div>
-            <div class="line-item__name">${l.name}</div>
+            <div class="line-item__name">${esc(l.name)}</div>
             <div class="qty">
-              <button data-qty="-1" data-id="${l.id}" aria-label="Azalt">−</button>
+              <button data-qty="-1" data-id="${esc(l.id)}" aria-label="Azalt">−</button>
               <span>${l.qty}</span>
-              <button data-qty="1" data-id="${l.id}" aria-label="Arttır">+</button>
+              <button data-qty="1" data-id="${esc(l.id)}" aria-label="Arttır">+</button>
             </div>
           </div>
           <div style="text-align:right">
             <div>${formatPrice(l.price * l.qty)}</div>
-            <button class="remove" data-remove="${l.id}">Kaldır</button>
+            <button class="remove" data-remove="${esc(l.id)}">Kaldır</button>
           </div>
         </div>`).join("")
     : `<p class="empty">Sepetiniz şu an boş.</p>`;
@@ -88,8 +223,16 @@ let currentSort = "onerilen";
 
 const priceHtml = (p) => `${formatPrice(p.price)}${p.oldPrice ? `<del>${formatPrice(p.oldPrice)}</del>` : ""}`;
 
+// Kategori düğmeleri ürünlerden otomatik oluşur; tabloya yeni kategori yazılırsa düğmesi de gelir.
+function renderFilters() {
+  const cats = [...new Set(products.map((p) => p.cat))];
+  document.getElementById("filters").innerHTML = ["hepsi", ...cats].map((c) =>
+    `<button class="chip${c === currentCat ? " active" : ""}" data-cat="${esc(c)}">${c === "hepsi" ? "Hepsi" : esc(c)}</button>`
+  ).join("");
+}
+
 function renderProducts() {
-  let items = currentCat === "hepsi" ? [...PRODUCTS] : PRODUCTS.filter((p) => p.cat === currentCat);
+  let items = currentCat === "hepsi" ? [...products] : products.filter((p) => p.cat === currentCat);
   if (currentSort === "artan") items.sort((a, b) => a.price - b.price);
   if (currentSort === "azalan") items.sort((a, b) => b.price - a.price);
   if (currentSort === "indirim") items = items.filter((p) => p.oldPrice);
@@ -101,16 +244,17 @@ function renderProducts() {
   }
   grid.innerHTML = items.map((p) => `
     <article class="card">
-      <div class="card__img" style="background:${p.bg || "#eef4f3"}" data-view="${p.id}">
-        ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+      <div class="card__img" style="background:${p.bg}" data-view="${esc(p.id)}">
+        ${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
         ${visual(p)}
       </div>
       <div class="card__body">
-        <span class="card__cat">${CATEGORY_LABELS[p.cat]}</span>
-        <h3 class="card__name" data-view="${p.id}">${p.name}</h3>
+        <span class="card__cat">${esc(p.cat)}</span>
+        <h3 class="card__name" data-view="${esc(p.id)}">${esc(p.name)}</h3>
+        ${p.amount ? `<span class="card__amount">${esc(p.amount)}</span>` : ""}
         <div class="card__foot">
           <span class="price">${priceHtml(p)}</span>
-          <button class="add-btn" data-add="${p.id}">Sepete Ekle</button>
+          <button class="add-btn" data-add="${esc(p.id)}">Sepete Ekle</button>
         </div>
       </div>
     </article>`).join("");
@@ -137,18 +281,18 @@ const modal = document.getElementById("productModal");
 let modalProductId = null;
 
 function openModal(id) {
-  const p = PRODUCTS.find((x) => x.id === id);
+  const p = findProduct(id);
   if (!p) return;
   modalProductId = id;
   const img = document.getElementById("modalImg");
-  img.style.background = p.bg || "#eef4f3";
+  img.style.background = p.bg;
   img.innerHTML = visual(p);
-  document.getElementById("modalCat").textContent = CATEGORY_LABELS[p.cat];
+  document.getElementById("modalCat").textContent = p.cat;
   document.getElementById("modalName").textContent = p.name;
   document.getElementById("modalPrice").innerHTML = priceHtml(p);
-  document.getElementById("modalDesc").textContent = p.desc;
-  document.getElementById("modalAmount").textContent = p.amount;
-  document.getElementById("modalUsage").textContent = p.usage;
+  document.getElementById("modalDesc").textContent = p.desc || "";
+  document.getElementById("modalAmount").textContent = p.amount || "—";
+  document.getElementById("modalUsage").textContent = p.usage || "—";
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
 }
@@ -180,16 +324,16 @@ document.getElementById("sort").addEventListener("change", (e) => {
 
 document.getElementById("productGrid").addEventListener("click", (e) => {
   const btn = e.target.closest("[data-add]");
-  if (btn) return addToCart(Number(btn.dataset.add));
+  if (btn) return addToCart(btn.dataset.add);
   const view = e.target.closest("[data-view]");
-  if (view) openModal(Number(view.dataset.view));
+  if (view) openModal(view.dataset.view);
 });
 
 document.getElementById("cartItems").addEventListener("click", (e) => {
   const q = e.target.closest("[data-qty]");
-  if (q) changeQty(Number(q.dataset.id), Number(q.dataset.qty));
+  if (q) changeQty(q.dataset.id, Number(q.dataset.qty));
   const r = e.target.closest("[data-remove]");
-  if (r) changeQty(Number(r.dataset.remove), -Infinity);
+  if (r) changeQty(r.dataset.remove, -Infinity);
 });
 
 document.getElementById("cartOpen").addEventListener("click", () => toggleDrawer(true));
@@ -204,13 +348,13 @@ document.getElementById("menuBtn").addEventListener("click", () => document.getE
 document.querySelectorAll("#nav a").forEach((a) => a.addEventListener("click", () => document.getElementById("nav").classList.remove("open")));
 
 document.getElementById("checkout").addEventListener("click", () => {
-  if (!cart.length) return showToast("Sepetiniz boş");
-  const lines = cart.map((i) => {
-    const p = PRODUCTS.find((x) => x.id === i.id);
-    return `• ${p.name} x${i.qty} — ${formatPrice(p.price * i.qty)}`;
-  });
-  const total = cart.reduce((s, i) => s + PRODUCTS.find((p) => p.id === i.id).price * i.qty, 0);
-  const text = `Merhaba, sipariş vermek istiyorum:\n${lines.join("\n")}\nToplam: ${formatPrice(total)}`;
+  const lines = cartLines();
+  if (!lines.length) return showToast("Sepetiniz boş");
+  const text = [
+    "Merhaba, sipariş vermek istiyorum:",
+    ...lines.map((l) => `• ${l.name}${l.amount ? ` (${l.amount})` : ""} x${l.qty} — ${formatPrice(l.price * l.qty)}`),
+    `Toplam: ${formatPrice(lines.reduce((s, l) => s + l.price * l.qty, 0))}`,
+  ].join("\n");
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
 });
 
@@ -225,5 +369,10 @@ document.getElementById("contactForm").addEventListener("submit", (e) => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
-renderProducts();
 renderCart();
+loadProducts().then((list) => {
+  products = list;
+  renderFilters();
+  renderProducts();
+  renderCart();
+});

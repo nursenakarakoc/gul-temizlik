@@ -1,24 +1,7 @@
-// ===================== GÜL TEMİZLİK ÜRÜN LİSTESİ =====================
-// Yeni ürün eklemek için aşağıdaki şablonu kopyalayıp listenin sonuna
-// (en alttaki "];" satırının hemen üstüne) yapıştırın ve bilgileri değiştirin.
-//
-//   { id: 17, name: "Ürün Adı", cat: "yuzey", shape: "sise", price: 99,
-//     amount: "1 L", usage: "Nerede kullanılır",
-//     desc: "Kısa açıklama." },
-//
-// id      : Her ürüne farklı bir numara verin (son numaranın bir fazlası).
-// name    : Ürün adı.
-// cat     : Kategori → yuzey, camasir, bulasik, banyo, kagit
-// shape   : Çizim → sise, sprey, kutu, rulo, sunger
-// price   : Fiyat (sadece rakam, ₺ yazmayın; kuruş için 49.90 gibi nokta kullanın).
-// oldPrice: (İsteğe bağlı) İndirimden önceki fiyat; yazarsanız üstü çizili görünür.
-// badge   : (İsteğe bağlı) Etiket, ör. "Yeni", "Çok Satan".
-// image   : (İsteğe bağlı) Ürün fotoğrafı, ör. "resimler/deterjan.jpg". Yazarsanız çizim yerine fotoğraf görünür.
-// bg, tone: (İsteğe bağlı) Arka plan ve çizim rengi.
-//
-// Ürünü silmek için o ürünün { ... }, satırlarını tamamen silin.
-// Dikkat: Yazıları "tırnak" içinde yazın ve her ürünün sonundaki virgülü unutmayın.
-// =====================================================================
+// YEDEK / ÖRNEK ÜRÜNLER
+// Ürünler normalde Google E-Tablo'dan okunur (bkz. URUN-YONETIMI.md ve script.js en üstteki ayar).
+// Tablo linki girilmemişse ya da tabloya ulaşılamazsa bu liste gösterilir.
+// shape: çizim türü (sise, sprey, kutu, rulo, sunger)
 const PRODUCTS = [
   { id: 1, name: "Yüzey Temizleyici Lavanta", cat: "yuzey", shape: "sise", price: 89, oldPrice: 109, bg: "#efeaf6", tone: "#8a6cc4", badge: "Çok Satan",
     amount: "2,5 L", usage: "Fayans, mutfak tezgâhı, yer ve tüm silinebilir yüzeyler",

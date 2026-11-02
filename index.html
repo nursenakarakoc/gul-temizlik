@@ -71,14 +71,7 @@
         <div class="section__head">
           <h2>Ürünler</h2>
           <div class="toolbar">
-            <div class="filters" id="filters">
-              <button class="chip active" data-cat="hepsi">Hepsi</button>
-              <button class="chip" data-cat="yuzey">Yüzey &amp; Ev</button>
-              <button class="chip" data-cat="camasir">Çamaşır</button>
-              <button class="chip" data-cat="bulasik">Bulaşık</button>
-              <button class="chip" data-cat="banyo">Banyo</button>
-              <button class="chip" data-cat="kagit">Kağıt &amp; Hijyen</button>
-            </div>
+            <div class="filters" id="filters"></div>
             <select class="sort" id="sort" aria-label="Sırala">
               <option value="onerilen">Önerilen</option>
               <option value="artan">Fiyat: Düşükten yükseğe</option>
@@ -87,7 +80,7 @@
             </select>
           </div>
         </div>
-        <div class="grid" id="productGrid"></div>
+        <div class="grid" id="productGrid"><p class="empty">Ürünler yükleniyor…</p></div>
       </div>
     </section>
 
