@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sena Takı — El Yapımı Takılar</title>
+  <meta name="description" content="El yapımı kolye, küpe, yüzük ve bileklikler. Sena Takı ile her güne bir parıltı.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">Sena<span>Takı</span></a>
+      <nav class="nav" id="nav">
+        <a href="#koleksiyon">Koleksiyon</a>
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
+      <div class="header__actions">
+        <button class="cart-btn" id="cartOpen" aria-label="Sepeti aç">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="menu-btn" id="menuBtn" aria-label="Menü">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">El yapımı · Sınırlı üretim</p>
+          <h1>Her güne<br>bir <em>parıltı</em> ekleyin</h1>
+          <p class="lead">Gümüş, altın kaplama ve doğal taşlarla özenle tasarlanmış takılar. Kendinize ya da sevdiklerinize özel.</p>
+          <div class="hero__cta">
+            <a href="#koleksiyon" class="btn btn--primary">Koleksiyonu Keşfet</a>
+            <a href="#iletisim" class="btn btn--ghost">Özel Sipariş</a>
+          </div>
+        </div>
+        <div class="hero__art" aria-hidden="true">
+          <div class="ring-art"></div>
+          <div class="sparkle s1"></div><div class="sparkle s2"></div><div class="sparkle s3"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container features__grid">
+        <div class="feature"><strong>925 Ayar Gümüş</strong><span>Sertifikalı malzeme</span></div>
+        <div class="feature"><strong>Ücretsiz Kargo</strong><span>500 ₺ ve üzeri</span></div>
+        <div class="feature"><strong>Hediye Paketi</strong><span>Her siparişte</span></div>
+        <div class="feature"><strong>14 Gün İade</strong><span>Koşulsuz</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="koleksiyon">
+      <div class="container">
+        <div class="section__head">
+          <h2>Koleksiyon</h2>
+          <div class="toolbar">
+            <div class="filters" id="filters">
+              <button class="chip active" data-cat="hepsi">Hepsi</button>
+              <button class="chip" data-cat="kolye">Kolye</button>
+              <button class="chip" data-cat="kupe">Küpe</button>
+              <button class="chip" data-cat="yuzuk">Yüzük</button>
+              <button class="chip" data-cat="bileklik">Bileklik</button>
+            </div>
+            <select class="sort" id="sort" aria-label="Sırala">
+              <option value="onerilen">Önerilen</option>
+              <option value="artan">Fiyat: Düşükten yükseğe</option>
+              <option value="azalan">Fiyat: Yüksekten düşüğe</option>
+              <option value="indirim">İndirimdekiler</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="section about" id="hakkimizda">
+      <div class="container about__inner">
+        <div class="about__art" aria-hidden="true"></div>
+        <div>
+          <h2>Hikâyemiz</h2>
+          <p>Sena Takı, küçük bir atölyede, takıya duyulan sevgiyle başladı. Her parça tek tek elde şekillendiriliyor, cilalanıyor ve özenle paketleniyor.</p>
+          <p>Amacımız; yıllarca takabileceğiniz, sade ama karakterli takılar üretmek. İsim kolyesi, tarih yüzüğü gibi kişiye özel tasarımlar için bize yazmanız yeterli.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="iletisim">
+      <div class="container contact__inner">
+        <div>
+          <h2>İletişim</h2>
+          <p>Sorularınız, özel siparişleriniz ve toptan talepleriniz için bize ulaşın.</p>
+          <ul class="contact__list">
+            <li><strong>Telefon:</strong> <a href="tel:+905444685776">0 (544) 468 57 76</a></li>
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/905444685776" target="_blank" rel="noopener">Hemen yazın</a></li>
+          </ul>
+        </div>
+        <form class="contact__form" id="contactForm">
+          <input name="ad" placeholder="Adınız" required>
+          <input name="eposta" type="email" placeholder="E-posta adresiniz" required>
+          <textarea name="mesaj" rows="4" placeholder="Mesajınız" required></textarea>
+          <button class="btn btn--primary" type="submit">WhatsApp ile Gönder</button>
+          <p class="form-note" id="formNote"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© <span id="year"></span> Sena Takı · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer__backdrop" data-close></div>
+    <div class="drawer__panel">
+      <div class="drawer__head">
+        <h3>Sepetim</h3>
+        <button class="icon-btn" data-close aria-label="Kapat">✕</button>
+      </div>
+      <div class="drawer__body" id="cartItems"></div>
+      <div class="drawer__foot">
+        <div class="total"><span>Toplam</span><strong id="cartTotal">0 ₺</strong></div>
+        <button class="btn btn--primary btn--block" id="checkout">WhatsApp ile Sipariş Ver</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalName">
+      <button class="icon-btn modal__close" data-close-modal aria-label="Kapat">✕</button>
+      <div class="modal__img" id="modalImg"></div>
+      <div class="modal__info">
+        <span class="card__cat" id="modalCat"></span>
+        <h3 id="modalName"></h3>
+        <p class="price" id="modalPrice"></p>
+        <p class="modal__desc" id="modalDesc"></p>
+        <dl class="specs">
+          <dt>Malzeme</dt><dd id="modalMaterial"></dd>
+          <dt>Ölçü</dt><dd id="modalSize"></dd>
+        </dl>
+        <button class="btn btn--primary btn--block" id="modalAdd">Sepete Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
