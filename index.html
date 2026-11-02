@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sena Takı — El Yapımı Takılar</title>
-  <meta name="description" content="El yapımı kolye, küpe, yüzük ve bileklikler. Sena Takı ile her güne bir parıltı.">
+  <title>Gül Temizlik — Temizlik Malzemeleri</title>
+  <meta name="description" content="Deterjan, yüzey temizleyici, bulaşık, banyo ve kağıt ürünleri. Gül Temizlik ile eviniz ve iş yeriniz pırıl pırıl.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="header">
     <div class="container header__inner">
-      <a href="#" class="logo">Sena<span>Takı</span></a>
+      <a href="#" class="logo">Gül<span>Temizlik</span></a>
       <nav class="nav" id="nav">
-        <a href="#koleksiyon">Koleksiyon</a>
+        <a href="#urunler">Ürünler</a>
         <a href="#hakkimizda">Hakkımızda</a>
         <a href="#iletisim">İletişim</a>
       </nav>
@@ -35,41 +35,49 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__text">
-          <p class="eyebrow">El yapımı · Sınırlı üretim</p>
-          <h1>Her güne<br>bir <em>parıltı</em> ekleyin</h1>
-          <p class="lead">Gümüş, altın kaplama ve doğal taşlarla özenle tasarlanmış takılar. Kendinize ya da sevdiklerinize özel.</p>
+          <p class="eyebrow">Ev · Ofis · İş yeri</p>
+          <h1>Temizliğin<br>en <em>taze</em> hâli</h1>
+          <p class="lead">Deterjandan kağıt ürünlerine, ihtiyacınız olan tüm temizlik malzemeleri uygun fiyatlarla kapınızda. Toptan siparişlere özel indirim.</p>
           <div class="hero__cta">
-            <a href="#koleksiyon" class="btn btn--primary">Koleksiyonu Keşfet</a>
-            <a href="#iletisim" class="btn btn--ghost">Özel Sipariş</a>
+            <a href="#urunler" class="btn btn--primary">Ürünleri İncele</a>
+            <a href="#iletisim" class="btn btn--ghost">Toptan Sipariş</a>
           </div>
         </div>
         <div class="hero__art" aria-hidden="true">
-          <div class="ring-art"></div>
-          <div class="sparkle s1"></div><div class="sparkle s2"></div><div class="sparkle s3"></div>
+          <svg class="hero__bottle" viewBox="0 0 120 160">
+            <path d="M48 20h30v10l14 8v10H70" fill="none" stroke="#2b3a3a" stroke-width="4" stroke-linejoin="round"/>
+            <rect x="54" y="30" width="20" height="14" rx="3" fill="#e0567a"/>
+            <path d="M44 44h40c6 0 10 4 10 10v86c0 6-4 10-10 10H44c-6 0-10-4-10-10V54c0-6 4-10 10-10Z" fill="#e0567a"/>
+            <rect x="44" y="76" width="40" height="44" rx="6" fill="#fff"/>
+            <path d="M64 86c-6 6-8 10-8 14a8 8 0 0 0 16 0c0-4-2-8-8-14Z" fill="#3cb5a0"/>
+            <circle cx="100" cy="36" r="3" fill="#3cb5a0"/><circle cx="108" cy="44" r="2.5" fill="#3cb5a0"/><circle cx="106" cy="28" r="2" fill="#3cb5a0"/>
+          </svg>
+          <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
         </div>
       </div>
     </section>
 
     <section class="features">
       <div class="container features__grid">
-        <div class="feature"><strong>925 Ayar Gümüş</strong><span>Sertifikalı malzeme</span></div>
-        <div class="feature"><strong>Ücretsiz Kargo</strong><span>500 ₺ ve üzeri</span></div>
-        <div class="feature"><strong>Hediye Paketi</strong><span>Her siparişte</span></div>
-        <div class="feature"><strong>14 Gün İade</strong><span>Koşulsuz</span></div>
+        <div class="feature"><strong>Toptan Fiyat</strong><span>Koli alımlarında indirim</span></div>
+        <div class="feature"><strong>Ücretsiz Teslimat</strong><span>750 ₺ ve üzeri</span></div>
+        <div class="feature"><strong>Hızlı Gönderim</strong><span>Aynı gün kargoda</span></div>
+        <div class="feature"><strong>Orijinal Ürün</strong><span>Faturalı satış</span></div>
       </div>
     </section>
 
-    <section class="section" id="koleksiyon">
+    <section class="section" id="urunler">
       <div class="container">
         <div class="section__head">
-          <h2>Koleksiyon</h2>
+          <h2>Ürünler</h2>
           <div class="toolbar">
             <div class="filters" id="filters">
               <button class="chip active" data-cat="hepsi">Hepsi</button>
-              <button class="chip" data-cat="kolye">Kolye</button>
-              <button class="chip" data-cat="kupe">Küpe</button>
-              <button class="chip" data-cat="yuzuk">Yüzük</button>
-              <button class="chip" data-cat="bileklik">Bileklik</button>
+              <button class="chip" data-cat="yuzey">Yüzey &amp; Ev</button>
+              <button class="chip" data-cat="camasir">Çamaşır</button>
+              <button class="chip" data-cat="bulasik">Bulaşık</button>
+              <button class="chip" data-cat="banyo">Banyo</button>
+              <button class="chip" data-cat="kagit">Kağıt &amp; Hijyen</button>
             </div>
             <select class="sort" id="sort" aria-label="Sırala">
               <option value="onerilen">Önerilen</option>
@@ -87,9 +95,9 @@
       <div class="container about__inner">
         <div class="about__art" aria-hidden="true"></div>
         <div>
-          <h2>Hikâyemiz</h2>
-          <p>Sena Takı, küçük bir atölyede, takıya duyulan sevgiyle başladı. Her parça tek tek elde şekillendiriliyor, cilalanıyor ve özenle paketleniyor.</p>
-          <p>Amacımız; yıllarca takabileceğiniz, sade ama karakterli takılar üretmek. İsim kolyesi, tarih yüzüğü gibi kişiye özel tasarımlar için bize yazmanız yeterli.</p>
+          <h2>Hakkımızda</h2>
+          <p>Gül Temizlik olarak evlere, ofislere, apartman yönetimlerine ve iş yerlerine temizlik malzemesi tedarik ediyoruz. Güvendiğimiz markaların orijinal ürünlerini uygun fiyatla sunuyoruz.</p>
+          <p>Tek ürün de alabilir, koli koli toptan sipariş de verebilirsiniz. Düzenli alım yapan işletmelere özel fiyat listesi için bize WhatsApp'tan yazmanız yeterli.</p>
         </div>
       </div>
     </section>
@@ -98,7 +106,7 @@
       <div class="container contact__inner">
         <div>
           <h2>İletişim</h2>
-          <p>Sorularınız, özel siparişleriniz ve toptan talepleriniz için bize ulaşın.</p>
+          <p>Ürün sorularınız, toptan fiyat ve teslimat talepleriniz için bize ulaşın.</p>
           <ul class="contact__list">
             <li><strong>Telefon:</strong> <a href="tel:+905444685776">0 (544) 468 57 76</a></li>
             <li><strong>WhatsApp:</strong> <a href="https://wa.me/905444685776" target="_blank" rel="noopener">Hemen yazın</a></li>
@@ -116,7 +124,7 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© <span id="year"></span> Sena Takı · Tüm hakları saklıdır.</div>
+    <div class="container">© <span id="year"></span> Gül Temizlik · Tüm hakları saklıdır.</div>
   </footer>
 
   <aside class="drawer" id="cartDrawer" aria-hidden="true">
@@ -145,8 +153,8 @@
         <p class="price" id="modalPrice"></p>
         <p class="modal__desc" id="modalDesc"></p>
         <dl class="specs">
-          <dt>Malzeme</dt><dd id="modalMaterial"></dd>
-          <dt>Ölçü</dt><dd id="modalSize"></dd>
+          <dt>Miktar</dt><dd id="modalAmount"></dd>
+          <dt>Kullanım</dt><dd id="modalUsage"></dd>
         </dl>
         <button class="btn btn--primary btn--block" id="modalAdd">Sepete Ekle</button>
       </div>

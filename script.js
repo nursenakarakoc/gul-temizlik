@@ -3,71 +3,73 @@ const WHATSAPP_NUMBER = "905444685776";
 
 // Ürün listesi — yeni ürün eklemek için bu diziye satır eklemeniz yeterli.
 // Bunlar örnek ürünlerdir; kendi ürünleriniz olunca değiştirin.
+// shape: çizim türü (sise, sprey, kutu, rulo, sunger)
 const PRODUCTS = [
-  { id: 1, name: "Damla Taşlı Kolye", cat: "kolye", price: 649, oldPrice: 799, bg: "#f3e6dc", tone: "#b8894a", badge: "Çok Satan",
-    material: "925 ayar gümüş, 22 ayar altın kaplama", size: "Zincir: 45 cm (+5 cm uzatma)",
-    desc: "Ortasında damla kesim zirkon taşı bulunan ince zincirli kolye. Günlük kullanıma ve özel günlere uygun." },
-  { id: 2, name: "İnci Detaylı Kolye", cat: "kolye", price: 549, bg: "#eef0ee", tone: "#9a9a9a",
-    material: "925 ayar gümüş, tatlı su incisi", size: "Zincir: 42 cm",
-    desc: "Tek bir doğal tatlı su incisiyle sade ve zarif bir tasarım. Her inci doğası gereği birbirinden farklıdır." },
-  { id: 3, name: "Harf Kolye", cat: "kolye", price: 449, bg: "#f6eadf", tone: "#c49a5a", badge: "Kişiye Özel",
-    material: "925 ayar gümüş, altın kaplama", size: "Zincir: 45 cm, harf: 1 cm",
-    desc: "İstediğiniz harfle hazırlanır. Sipariş notuna harfi yazmanız yeterli. Hediye için harika bir seçim." },
-  { id: 4, name: "Sonsuzluk Kolye", cat: "kolye", price: 499, bg: "#f2e8ee", tone: "#b07a8c", badge: "Yeni",
-    material: "925 ayar gümüş, rose kaplama", size: "Zincir: 45 cm",
-    desc: "Sonsuzluk simgeli, rose renkli ince kolye. Sevgiliye ya da en yakın arkadaşa anlamlı bir hediye." },
-  { id: 5, name: "Halka Küpe", cat: "kupe", price: 399, bg: "#f1e9e1", tone: "#b8894a",
-    material: "925 ayar gümüş, altın kaplama", size: "Çap: 2 cm",
-    desc: "Her kombine uyan klasik halka küpe. Hafif yapısıyla gün boyu rahat kullanılır." },
-  { id: 6, name: "Zirkon Taşlı Küpe", cat: "kupe", price: 349, oldPrice: 429, bg: "#eceff3", tone: "#8c95a3",
-    material: "925 ayar gümüş, zirkon taş", size: "Taş: 5 mm",
-    desc: "Parıltılı tek taş vida küpe. Sade ama göz alıcı; her yaşa yakışır." },
-  { id: 7, name: "Yaprak Küpe", cat: "kupe", price: 379, bg: "#eef1e8", tone: "#a08a55", badge: "Yeni",
-    material: "925 ayar gümüş, mat altın kaplama", size: "Boy: 2,5 cm",
-    desc: "Doğadan ilham alan yaprak formlu sallantılı küpe. El işçiliğiyle dokulandırılmıştır." },
-  { id: 8, name: "Ay Yıldız Küpe Seti", cat: "kupe", price: 289, bg: "#eae8f2", tone: "#7c74a8",
-    material: "925 ayar gümüş", size: "Ay: 8 mm, yıldız: 6 mm",
-    desc: "Biri ay biri yıldız olan asimetrik küpe seti. Eğlenceli ve modern bir dokunuş." },
-  { id: 9, name: "Tektaş Yüzük", cat: "yuzuk", price: 899, bg: "#f4ece4", tone: "#b8894a", badge: "Çok Satan",
-    material: "925 ayar gümüş, zirkon taş", size: "Ölçü: 6–9 (sipariş notunda belirtin)",
-    desc: "Klasik tektaş formunda, ışığı güzel yansıtan yüzük. Söz ve nişan hediyesi olarak da tercih edilir." },
-  { id: 10, name: "Minimal Bant Yüzük", cat: "yuzuk", price: 299, bg: "#eeeeee", tone: "#9a9a9a",
-    material: "925 ayar gümüş", size: "Ölçü: 5–10",
-    desc: "İnce ve sade bant yüzük. Tek başına ya da diğer yüzüklerle üst üste takılabilir." },
-  { id: 11, name: "Tarih Yazılı Yüzük", cat: "yuzuk", price: 499, bg: "#f6e9e3", tone: "#c18d6b", badge: "Kişiye Özel",
-    material: "925 ayar gümüş, rose kaplama", size: "Ölçü: 5–10",
-    desc: "Sizin için önemli bir tarih yüzüğün dışına işlenir. Tarihi sipariş notuna yazmanız yeterli." },
-  { id: 12, name: "Doğal Taş Yüzük", cat: "yuzuk", price: 459, bg: "#e7f0ec", tone: "#4f8c74",
-    material: "925 ayar gümüş, yeşim taşı", size: "Ölçü: ayarlanabilir",
-    desc: "Doğal yeşim taşıyla hazırlanan ayarlanabilir yüzük. Her taşın rengi ve deseni eşsizdir." },
-  { id: 13, name: "Zincir Bileklik", cat: "bileklik", price: 429, bg: "#f3ebe2", tone: "#b8894a",
-    material: "925 ayar gümüş, altın kaplama", size: "Uzunluk: 17 cm (+3 cm uzatma)",
-    desc: "Kalın halkalı, şık zincir bileklik. Saatle birlikte ya da tek başına güzel durur." },
-  { id: 14, name: "Nazar Boncuklu Bileklik", cat: "bileklik", price: 259, bg: "#e8eef5", tone: "#4a7bb8", badge: "Yeni",
-    material: "925 ayar gümüş, mineli nazar boncuğu", size: "Uzunluk: 16 cm (+3 cm uzatma)",
-    desc: "Küçük mineli nazar boncuklu ince bileklik. Kötü gözlere karşı şık bir koruma." },
-  { id: 15, name: "Kelepçe Bileklik", cat: "bileklik", price: 579, bg: "#f0ece6", tone: "#a3825a",
-    material: "925 ayar gümüş, mat altın kaplama", size: "Ayarlanabilir",
-    desc: "Açık uçlu, bileğe göre ayarlanabilen kelepçe bileklik. Modern ve güçlü bir görünüm." },
-  { id: 16, name: "Taşlı Tenis Bileklik", cat: "bileklik", price: 849, oldPrice: 999, bg: "#eef0f4", tone: "#8a93a6", badge: "Çok Satan",
-    material: "925 ayar gümüş, zirkon taşlar", size: "Uzunluk: 17 cm",
-    desc: "Baştan sona sıra taşlı, parıltılı tenis bileklik. Davetler ve özel geceler için ideal." },
+  { id: 1, name: "Yüzey Temizleyici Lavanta", cat: "yuzey", shape: "sise", price: 89, oldPrice: 109, bg: "#efeaf6", tone: "#8a6cc4", badge: "Çok Satan",
+    amount: "2,5 L", usage: "Fayans, mutfak tezgâhı, yer ve tüm silinebilir yüzeyler",
+    desc: "Kalıcı lavanta kokulu, sulandırarak da kullanılabilen ekonomik yüzey temizleyici." },
+  { id: 2, name: "Çamaşır Suyu Ultra", cat: "yuzey", shape: "sise", price: 69, bg: "#e8f2fa", tone: "#3a86c8",
+    amount: "4 L", usage: "Banyo, tuvalet, zemin; beyaz çamaşırlar",
+    desc: "Yoğun kıvamlı, mikroplara karşı etkili çamaşır suyu. Kötü kokuları giderir." },
+  { id: 3, name: "Cam Temizleyici Sprey", cat: "yuzey", shape: "sprey", price: 59, bg: "#e6f5f3", tone: "#2ea893",
+    amount: "750 ml", usage: "Cam, ayna, vitrin ve parlak yüzeyler",
+    desc: "İz bırakmadan parlatan, hızlı kuruyan cam temizleyici." },
+  { id: 4, name: "Yağ Çözücü Sprey", cat: "yuzey", shape: "sprey", price: 79, bg: "#fdf0e3", tone: "#e08a2e", badge: "Yeni",
+    amount: "750 ml", usage: "Ocak, davlumbaz, fırın, mutfak dolapları",
+    desc: "Mutfaktaki inatçı yağ ve kirleri ovalamadan çözer." },
+  { id: 5, name: "Toz Çamaşır Deterjanı", cat: "camasir", shape: "kutu", price: 349, oldPrice: 399, bg: "#e8f2fa", tone: "#3a86c8", badge: "Çok Satan",
+    amount: "9 kg (60 yıkama)", usage: "Beyaz ve renkli çamaşırlar, otomatik makine",
+    desc: "Düşük sıcaklıkta bile lekeleri çıkaran ekonomik boy toz deterjan." },
+  { id: 6, name: "Sıvı Çamaşır Deterjanı", cat: "camasir", shape: "sise", price: 229, bg: "#eef0f6", tone: "#5a6ab0",
+    amount: "3 L (50 yıkama)", usage: "Renkli ve siyah çamaşırlar",
+    desc: "Renkleri koruyan, kalıntı bırakmayan sıvı deterjan." },
+  { id: 7, name: "Çamaşır Yumuşatıcı", cat: "camasir", shape: "sise", price: 129, bg: "#fbe9ef", tone: "#e0567a",
+    amount: "4 L", usage: "Tüm çamaşırlar",
+    desc: "Çamaşırlarınıza yumuşaklık ve gün boyu süren gül ferahlığı." },
+  { id: 8, name: "Bulaşık Deterjanı Limon", cat: "bulasik", shape: "sise", price: 75, bg: "#fbf6dc", tone: "#d6b21e",
+    amount: "1,5 L", usage: "Elde bulaşık yıkama",
+    desc: "Yağları hızla çözen, elleri yormayan limon kokulu bulaşık deterjanı." },
+  { id: 9, name: "Bulaşık Makinesi Tableti", cat: "bulasik", shape: "kutu", price: 289, oldPrice: 339, bg: "#e6f5f3", tone: "#2ea893",
+    amount: "60 tablet", usage: "Bulaşık makinesi",
+    desc: "Hepsi bir arada tablet: deterjan, parlatıcı ve tuz bir arada." },
+  { id: 10, name: "Bulaşık Süngeri (10'lu)", cat: "bulasik", shape: "sunger", price: 49, bg: "#f1f6e4", tone: "#7aa83a",
+    amount: "10 adet", usage: "Bulaşık ve mutfak temizliği",
+    desc: "Bir yüzü yumuşak, bir yüzü ovucu; tencere ve tavaya zarar vermez." },
+  { id: 11, name: "Kireç Çözücü", cat: "banyo", shape: "sprey", price: 85, bg: "#e8f2fa", tone: "#3a86c8",
+    amount: "750 ml", usage: "Duşakabin, batarya, lavabo, fayans",
+    desc: "Kireç ve sabun lekelerini kolayca çözer, armatürlere parlaklık verir." },
+  { id: 12, name: "WC Jel Temizleyici", cat: "banyo", shape: "sise", price: 65, bg: "#e6f5f3", tone: "#2ea893", badge: "Yeni",
+    amount: "750 ml", usage: "Klozet ve pisuvar",
+    desc: "Kenar altlarına kadar ulaşan yoğun jel; kir ve kokuyu giderir." },
+  { id: 13, name: "Sıvı El Sabunu", cat: "banyo", shape: "sise", price: 119, bg: "#fbe9ef", tone: "#e0567a",
+    amount: "3,5 L", usage: "Ev, ofis ve iş yeri lavaboları",
+    desc: "Gül kokulu, cildi kurutmayan ekonomik boy sıvı sabun. Dispenser doldurmak için ideal." },
+  { id: 14, name: "Tuvalet Kağıdı (32'li)", cat: "kagit", shape: "rulo", price: 259, oldPrice: 299, bg: "#f4f4f4", tone: "#9aa0a6", badge: "Çok Satan",
+    amount: "32 rulo, 3 katlı", usage: "Ev ve iş yeri",
+    desc: "Yumuşak ve dayanıklı 3 katlı tuvalet kağıdı, ekonomik paket." },
+  { id: 15, name: "Kağıt Havlu (12'li)", cat: "kagit", shape: "rulo", price: 199, bg: "#eef4f8", tone: "#6a98b8",
+    amount: "12 rulo, 2 katlı", usage: "Mutfak ve genel temizlik",
+    desc: "Yüksek emiciliğe sahip, kolay yırtılmayan kağıt havlu." },
+  { id: 16, name: "Çöp Torbası Jumbo (10'lu)", cat: "kagit", shape: "kutu", price: 55, bg: "#ececec", tone: "#4a4f55",
+    amount: "10 adet, 80x110 cm", usage: "Büyük çöp kovaları, iş yerleri",
+    desc: "Kalın ve dayanıklı, büzgülü jumbo boy çöp torbası." },
 ];
 
-const CATEGORY_LABELS = { kolye: "Kolye", kupe: "Küpe", yuzuk: "Yüzük", bileklik: "Bileklik" };
+const CATEGORY_LABELS = { yuzey: "Yüzey & Ev", camasir: "Çamaşır", bulasik: "Bulaşık", banyo: "Banyo", kagit: "Kağıt & Hijyen" };
 
 // Görsel yerine basit çizimler; gerçek fotoğraflarınız olunca <img> ile değiştirebilirsiniz.
-function icon(cat, tone) {
-  const s = `stroke="${tone}" stroke-width="3" fill="none" stroke-linecap="round"`;
-  switch (cat) {
-    case "kolye":
-      return `<svg viewBox="0 0 100 100"><path d="M18 12 Q50 78 82 12" ${s}/><path d="M50 62 l-9 13 9 14 9-14z" fill="${tone}" opacity=".85"/></svg>`;
-    case "kupe":
-      return `<svg viewBox="0 0 100 100"><circle cx="32" cy="58" r="16" ${s}/><circle cx="68" cy="58" r="16" ${s}/><circle cx="32" cy="34" r="3" fill="${tone}"/><circle cx="68" cy="34" r="3" fill="${tone}"/></svg>`;
-    case "yuzuk":
-      return `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="62" rx="28" ry="24" ${s} stroke-width="6"/><path d="M50 22 l-12 12 12 10 12-10z" fill="${tone}" opacity=".85"/></svg>`;
+function icon(shape, tone) {
+  switch (shape) {
+    case "sprey":
+      return `<svg viewBox="0 0 100 100"><path d="M38 14h22v8l10 6v6H52" fill="none" stroke="#2b3a3a" stroke-width="3" stroke-linejoin="round"/><rect x="42" y="22" width="14" height="10" rx="2" fill="${tone}"/><path d="M36 32h28c4 0 6 3 6 6v48c0 4-2 6-6 6H36c-4 0-6-2-6-6V38c0-3 2-6 6-6Z" fill="${tone}"/><rect x="36" y="52" width="28" height="22" rx="4" fill="#fff" opacity=".9"/><circle cx="80" cy="24" r="2.5" fill="${tone}"/><circle cx="86" cy="31" r="2" fill="${tone}"/></svg>`;
+    case "kutu":
+      return `<svg viewBox="0 0 100 100"><rect x="22" y="24" width="56" height="64" rx="6" fill="${tone}"/><rect x="36" y="16" width="28" height="12" rx="4" fill="none" stroke="${tone}" stroke-width="4"/><rect x="30" y="44" width="40" height="26" rx="5" fill="#fff" opacity=".9"/><circle cx="44" cy="57" r="5" fill="${tone}" opacity=".5"/><circle cx="56" cy="55" r="3.5" fill="${tone}" opacity=".5"/></svg>`;
+    case "rulo":
+      return `<svg viewBox="0 0 100 100"><rect x="26" y="26" width="48" height="56" fill="#fff" stroke="${tone}" stroke-width="3"/><ellipse cx="50" cy="82" rx="24" ry="8" fill="#fff" stroke="${tone}" stroke-width="3"/><rect x="27.5" y="26" width="45" height="56" fill="#fff"/><ellipse cx="50" cy="26" rx="24" ry="8" fill="#fff" stroke="${tone}" stroke-width="3"/><ellipse cx="50" cy="26" rx="7" ry="2.5" fill="${tone}"/></svg>`;
+    case "sunger":
+      return `<svg viewBox="0 0 100 100"><rect x="18" y="34" width="64" height="20" rx="5" fill="${tone}"/><rect x="18" y="52" width="64" height="16" rx="5" fill="#f2d24a"/><circle cx="32" cy="58" r="2" fill="#d6b21e"/><circle cx="50" cy="62" r="2" fill="#d6b21e"/><circle cx="66" cy="58" r="2" fill="#d6b21e"/><circle cx="78" cy="24" r="4" fill="none" stroke="${tone}" stroke-width="2"/><circle cx="66" cy="20" r="2.5" fill="none" stroke="${tone}" stroke-width="2"/></svg>`;
     default:
-      return `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="36" ry="30" ${s} stroke-dasharray="6 5" stroke-width="5"/><circle cx="50" cy="80" r="5" fill="${tone}"/></svg>`;
+      return `<svg viewBox="0 0 100 100"><rect x="42" y="10" width="16" height="10" rx="2" fill="#2b3a3a"/><path d="M40 20h20v8c8 3 12 8 12 15v41c0 4-3 6-6 6H34c-3 0-6-2-6-6V43c0-7 4-12 12-15Z" fill="${tone}"/><rect x="34" y="48" width="32" height="26" rx="5" fill="#fff" opacity=".9"/><path d="M50 54c-4 4-5 7-5 9a5 5 0 0 0 10 0c0-2-1-5-5-9Z" fill="${tone}"/></svg>`;
   }
 }
 
@@ -75,10 +77,10 @@ const formatPrice = (n) => n.toLocaleString("tr-TR") + " ₺";
 
 // --- Sepet (tarayıcıda saklanır) ---
 let cart = [];
-try { cart = JSON.parse(localStorage.getItem("sena-cart")) || []; } catch { cart = []; }
+try { cart = JSON.parse(localStorage.getItem("gul-cart")) || []; } catch { cart = []; }
 
 function saveCart() {
-  try { localStorage.setItem("sena-cart", JSON.stringify(cart)); } catch {}
+  try { localStorage.setItem("gul-cart", JSON.stringify(cart)); } catch {}
   renderCart();
 }
 
@@ -87,7 +89,7 @@ function addToCart(id) {
   if (item) item.qty++;
   else cart.push({ id, qty: 1 });
   saveCart();
-  showToast("Sepete eklendi ✨");
+  showToast("Sepete eklendi ✓");
 }
 
 function changeQty(id, delta) {
@@ -110,7 +112,7 @@ function renderCart() {
   list.innerHTML = lines.length
     ? lines.map((l) => `
         <div class="line-item">
-          <div class="line-item__img" style="background:${l.bg}">${icon(l.cat, l.tone)}</div>
+          <div class="line-item__img" style="background:${l.bg}">${icon(l.shape, l.tone)}</div>
           <div>
             <div class="line-item__name">${l.name}</div>
             <div class="qty">
@@ -148,7 +150,7 @@ function renderProducts() {
     <article class="card">
       <div class="card__img" style="background:${p.bg}" data-view="${p.id}">
         ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
-        ${icon(p.cat, p.tone)}
+        ${icon(p.shape, p.tone)}
       </div>
       <div class="card__body">
         <span class="card__cat">${CATEGORY_LABELS[p.cat]}</span>
@@ -187,13 +189,13 @@ function openModal(id) {
   modalProductId = id;
   const img = document.getElementById("modalImg");
   img.style.background = p.bg;
-  img.innerHTML = icon(p.cat, p.tone);
+  img.innerHTML = icon(p.shape, p.tone);
   document.getElementById("modalCat").textContent = CATEGORY_LABELS[p.cat];
   document.getElementById("modalName").textContent = p.name;
   document.getElementById("modalPrice").innerHTML = priceHtml(p);
   document.getElementById("modalDesc").textContent = p.desc;
-  document.getElementById("modalMaterial").textContent = p.material;
-  document.getElementById("modalSize").textContent = p.size;
+  document.getElementById("modalAmount").textContent = p.amount;
+  document.getElementById("modalUsage").textContent = p.usage;
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
 }
