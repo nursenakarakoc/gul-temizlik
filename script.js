@@ -4,7 +4,7 @@ const WHATSAPP_NUMBER = "905444685776";
 
 // Ürünlerin okunacağı Google E-Tablo'nun "Web'de yayınla → CSV" linki.
 // Boş bırakılırsa urunler.js içindeki örnek ürünler gösterilir.
-const URUN_TABLOSU_LINKI = "";
+const URUN_TABLOSU_LINKI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTBtRDhgAvWJT5FVJXiKREGFH-AUUlBEhqLM9zs_pC3I5QbyuAO36ngdO7FvTR00EBKd0W2RTYprZBa/pub?gid=142716248&single=true&output=csv";
 // =================================================================
 
 const CATEGORY_LABELS = { yuzey: "Yüzey & Ev", camasir: "Çamaşır", bulasik: "Bulaşık", banyo: "Banyo", kagit: "Kağıt & Hijyen" };
